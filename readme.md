@@ -41,6 +41,10 @@ Two model variants are provided:
 
 ## Dataset
 
+📦 **Download:** [Sugarcane Disease Dataset (Google Drive)](https://drive.google.com/file/d/1Svp70KvoKT1u2b3E00BdUNU1NC8pg0W_/view?usp=drive_link)
+
+After downloading, extract and place the folder as:
+
 ```
 f_data/
 ├── Healthy/        ← class 0

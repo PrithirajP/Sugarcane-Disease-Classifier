@@ -5,3 +5,26 @@ captum>=0.7.0
 Pillow>=10.0.0
 numpy>=1.24.0
 matplotlib>=3.7.0
+# PyTorch Core & Vision
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Data Manipulation & Math
+numpy>=1.21.0
+
+# Image Processing
+opencv-python>=4.5.0
+
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Evaluation Metrics
+scikit-learn>=1.0.0
+
+# Explainable AI (Integrated Gradients)
+captum>=0.6.0
+
+# Jupyter Notebook Environment (Optional but recommended)
+notebook>=6.4.0
+ipykernel>=6.0.0

@@ -154,25 +154,35 @@ The lower learning rate (`1e-4` vs `1e-3`) reflects that only a small head is be
 |---|---|---|
 | Input resolution | 128 × 128 | 224 × 224 |
 | Trainable parameters | ~8.6M | ~13M (head only) |
-| Epochs to converge | 29 (early stop) | ~11 (early stop) |
-| Best val loss | 0.0574 | 0.0719 |
-| Best val accuracy | 96.94 % | 97.22 % |
-| Test accuracy | **96 %** | — |
-| Test F1 (macro) | **0.96** | — |
+| Epochs to converge | 21 (early stop) | 12 (early stop) |
+| Best val loss | 0.0698 | 0.0757 |
+| Best val accuracy | 96.11 % | 97.78 % |
+| Test accuracy | **94 %** | **95 %** |
+| Test F1 (macro) | **0.94** | **0.95** |
 | Inference speed | Fast (128 px) | Slower (224 px) |
 | Checkpoint file | `best_custom_cnn.pth` | `best_vgg16.pth` |
 
-> **Custom CNN test results** (from classification report, 361 images):
+> **Custom CNN test results** (classification report, 361 images):
 >
 > ```
 >               precision  recall  f1-score  support
->    Healthy       0.95     0.96     0.96      176
->  Unhealthy       0.96     0.96     0.96      185
->   accuracy                         0.96      361
->  macro avg       0.96     0.96     0.96      361
+>    Healthy       0.96     0.92     0.94      176
+>  Unhealthy       0.93     0.96     0.94      185
+>   accuracy                         0.94      361
+>  macro avg       0.94     0.94     0.94      361
 > ```
 
-Both models show balanced precision and recall across classes, indicating no systematic bias toward either `Healthy` or `Unhealthy`.
+> **VGG16 test results** (classification report, 361 images):
+>
+> ```
+>               precision  recall  f1-score  support
+>    Healthy       0.93     0.98     0.95      176
+>  Unhealthy       0.98     0.93     0.95      185
+>   accuracy                         0.95      361
+>  macro avg       0.95     0.95     0.95      361
+> ```
+
+Both models show balanced precision and recall across classes, indicating no systematic bias toward either `Healthy` or `Unhealthy`. VGG16 edges ahead on test accuracy (95 % vs 94 %) while converging in roughly half the epochs.
 
 ---
 
@@ -370,19 +380,31 @@ All `@st.cache_resource` and `@st.cache_data` decorators live in `app.py`, keepi
 ```
 Custom CNN — Test Set (361 images)
 ────────────────────────────────────────
-  Accuracy   :  96.0 %
-  Precision  :  0.96  (macro)
-  Recall     :  0.96  (macro)
-  F1-score   :  0.96  (macro)
+  Accuracy   :  94.0 %
+  Precision  :  0.94  (macro)
+  Recall     :  0.94  (macro)
+  F1-score   :  0.94  (macro)
 
-  Healthy    →  precision 0.95  recall 0.96
-  Unhealthy  →  precision 0.96  recall 0.96
+  Healthy    →  precision 0.96  recall 0.92
+  Unhealthy  →  precision 0.93  recall 0.96
 
-VGG16 — Best Validation Accuracy
+  Best Val Loss     :  0.0698  (epoch 16)
+  Best Val Accuracy :  96.11 %
+  Converged in      :  21 epochs
+
+VGG16 — Test Set (361 images)
 ────────────────────────────────────────
-  Val Accuracy   :  97.22 %  (epoch 11)
-  Val Loss       :  0.0719
-  Converged in   :  11 epochs
+  Accuracy   :  95.0 %
+  Precision  :  0.95  (macro)
+  Recall     :  0.95  (macro)
+  F1-score   :  0.95  (macro)
+
+  Healthy    →  precision 0.93  recall 0.98
+  Unhealthy  →  precision 0.98  recall 0.93
+
+  Best Val Loss     :  0.0757  (epoch 8)
+  Best Val Accuracy :  97.78 %
+  Converged in      :  12 epochs
 ```
 
 Both models were trained on CUDA (`torch.device('cuda')`). Inference runs on CPU in the Streamlit app without any code changes.
